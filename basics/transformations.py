@@ -5,17 +5,17 @@ import matplotlib.pyplot as plt
 
 def define_transformations() -> List[np.ndarray]:
     """
-        Returns the four transformations t_1, .., t_4 to transform the square. 
-        The transformations are determined by using mscale, mrotate and mtranslate.
+    Returns the four transformations t_1, .., t_4 to transform the square.
+    The transformations are determined by using mscale, mrotate and mtranslate.
     """
 
     t1 = transform_vertices(mrotate(55), mtranslate(-3, 0))
     t2 = transform_vertices(mscale(3, 2), transform_vertices(mrotate(70), mtranslate(3, 1)))
-
-    t3 =  mtranslate(3, 3), np.zeros((3,3))
-    t4 = np.eye(4) 
+    t3 = transform_vertices(mtranslate(3, 3), np.eye(3))
+    t4 = transform_vertices(mrotate(70), transform_vertices(mscale(3, 5), mtranslate(3, 1)))
 
     return [t1, t2, t3, t4]
+
 
 def mscale(sx : float, sy : float) -> np.ndarray:
     """
@@ -55,8 +55,6 @@ def mtranslate(tx : float, ty : float) -> np.ndarray:
 
     return m
 
-
-
 def transform_vertices(v: np.ndarray, m: np.ndarray) -> np.ndarray:
     """
     Transform the (4xN) vertices given by v with the (4x4) transformation matrix determined by m.
@@ -75,10 +73,10 @@ def display_vertices(v : np.ndarray, title : str) -> None:
     plt.title(title)
 
     # x and y limits
-    plt.xlim((-6,6))
-    plt.ylim((-6,6))
-    plt.xticks(range(-6,6))
-    plt.yticks(range(-6,6))
+    plt.xlim((-10,10))
+    plt.ylim((-10,10))
+    plt.xticks(range(-10,10))
+    plt.yticks(range(-10,10))
 
     # plot coordinate axis
     plt.axvline(color='black')
