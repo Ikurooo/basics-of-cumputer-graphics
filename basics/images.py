@@ -54,16 +54,24 @@ def filter_image(img: np.ndarray) -> np.ndarray:
     """
     Applies a Gaussian filter to the input image using convolution.
     """
-    # Gaussian kernel
-    gaussian_kernel = utils.gauss_filter(5, 2)
+    size = 5
+    sigma = 2.0
+    channels = img.shape[2] if len(img.shape) == 3 else 1
 
-    if gaussian_kernel.ndim == 1:
-        gaussian_kernel = gaussian_kernel[:, np.newaxis]
+    # Generate 2D Gaussian filter for a single channel
+    single_channel_gaussian = utils.gauss_filter(size, sigma)
 
-    # Now use scipy.ndimage.convolve with the correct kernel
+    # Stack the 2D filter for each channel
+    gaussian_kernel = np.stack([single_channel_gaussian] * channels, axis=-1)
+
     filtered_image = scipy.ndimage.convolve(img, gaussian_kernel, mode='constant', cval=0.0)
 
+    # Apply additional post-processing if needed
+    # Example: Increase contrast
+    filtered_image = np.clip(filtered_image * 0.3, 0, 1)
+
     return filtered_image
+
 
 def horizontal_edges(img: np.ndarray) -> np.ndarray:
     """
@@ -72,7 +80,6 @@ def horizontal_edges(img: np.ndarray) -> np.ndarray:
     # Convert RGB image to grayscale
     img_gray = grayscale(img)
 
-    # Sobel kernel for horizontal edges
     kernel = np.array([[-1, -2, -1],
                        [0, 0, 0],
                        [1, 2, 1]])

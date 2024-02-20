@@ -6,10 +6,12 @@ from mpl_toolkits.mplot3d import Axes3D
 def rgb2gray(rgb:np.ndarray) -> np.ndarray:
     return np.dot(rgb[...,:3], [0.2989, 0.5870, 0.1140])
 
-def gauss_filter(size:int, sigma:float) -> np.ndarray:
+def gauss_filter(size: int, sigma: float) -> np.ndarray:
     x, y = np.mgrid[-size//2 + 1:size//2 + 1, -size//2 + 1:size//2 + 1]
-    g = np.exp(-((x**2 + y**2)/(2.0*sigma**2)))
-    return g/g.sum()
+    g = np.exp(-((x**2 + y**2) / (2.0 * sigma**2)))
+    normalized_gaussian = g / g.sum()
+
+    return normalized_gaussian
 
 def plot_triangle(p1:np.ndarray,p2:np.ndarray,p3:np.ndarray,v1:np.ndarray,v2:np.ndarray,v3:np.ndarray, normal:np.ndarray):
     mean = np.mean(np.stack([p1,p2,p3]), axis=0)
