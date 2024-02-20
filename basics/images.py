@@ -78,7 +78,7 @@ def horizontal_edges(img: np.ndarray) -> np.ndarray:
     Defines a Sobel kernel to extract horizontal edges and convolves the image with it.
     """
     # Convert RGB image to grayscale
-    img_gray = grayscale(img)
+    img_gray = grayscale(img) if len(img.shape) == 3 else img
 
     kernel = np.array([[-1, -2, -1],
                        [0, 0, 0],
