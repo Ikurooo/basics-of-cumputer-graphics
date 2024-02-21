@@ -53,9 +53,9 @@ def cross_product(v1:np.ndarray, v2:np.ndarray) -> np.ndarray:
         Cross product of v1 and v2.
     """
 
-    r = np.array([v1*v2 - v1*v2,
-                  v1*v2 - v1*v2,
-                  v1*v2 - v1*v2])
+    r = np.array([v1[1]*v2[2] - v1[2]*v2[1],
+              v1[2]*v2[0] - v1[0]*v2[2],
+              v1[0]*v2[1] - v1[1]*v2[0]])
 
     return r
 
